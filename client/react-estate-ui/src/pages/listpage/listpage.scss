@@ -1,0 +1,109 @@
+// listpage.scss
+@use '../../responsive' as *;
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.listpage {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: #fafafa;
+  overflow: hidden;           // Lock outer container on desktop
+
+  @include md {
+    flex-direction: column;
+    height: 100vh;            // ← KEEP 100vh, don't use auto
+    overflow: hidden;         // ← Still lock, scroll happens inside
+  }
+
+  // ─── LEFT: List + Filter ───
+  .listcontainer {
+    flex: 3;
+    min-width: 0;
+    height: 100vh;            // Full viewport
+    overflow-y: auto;         // ← ALWAYS scrollable
+    overflow-x: hidden;
+    background: #fafafa;
+
+    // Tiny scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.12) transparent;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.12);
+      border-radius: 10px;
+    }
+
+    @include md {
+      flex: none;
+      width: 100%;
+      height: 55vh;         // ← Fixed height, scrolls inside
+      order: 2;
+      overflow-y: auto;     // ← KEEP scrolling
+    }
+
+    @include sm {
+      height: 60vh;         // More space for list on small screens
+    }
+
+    .wrapper {
+      padding: 24px 40px 50px 24px;
+      gap: 20px;
+
+      @include lg {
+        padding: 20px 30px 40px 20px;
+      }
+
+      @include md {
+        padding: 16px 20px 40px 20px;
+      }
+
+      @include sm {
+        padding: 12px 16px 30px 16px;
+      }
+
+      .cards {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        @include sm {
+          gap: 16px;
+        }
+      }
+    }
+  }
+
+  // ─── RIGHT: Map ───
+  .mapcontainer {
+    flex: 2;
+    height: 100vh;
+    min-width: 0;
+    position: relative;
+    background: #e8e8e8;
+
+    @include md {
+      flex: none;
+      width: 100%;
+      height: 45vh;
+      order: 2;
+      min-height: 250px;
+    }
+
+    @include sm {
+      height: 40vh;
+      order: 2;
+      min-height: 200px;
+    }
+  }
+}

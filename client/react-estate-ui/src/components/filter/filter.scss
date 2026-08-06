@@ -1,0 +1,115 @@
+// filter.scss
+@use '../../responsive' as *;
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e8e8e8;
+
+  @include sm {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  h1 {
+    font-weight: 300;
+    font-size: 20px;
+    margin: 0;
+
+    @include sm {
+      font-size: 16px;
+    }
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    label {
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      background: #fafafa;
+
+      &:focus {
+        outline: none;
+        border-color: #fece51;
+      }
+    }
+  }
+
+  .top {
+    input {
+      width: 100%;
+    }
+  }
+
+  .bottom {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    @include md {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @include sm {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .item {
+      flex: 1;
+      min-width: 120px;
+
+      @include md {
+        min-width: 0;
+      }
+    }
+
+    button {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #fece51;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+
+      @include md {
+        grid-column: span 3;
+        width: 100%;
+      }
+
+      @include sm {
+        grid-column: span 2;
+      }
+
+      &:hover {
+        background-color: #e5b800;
+      }
+
+      img {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}

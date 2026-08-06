@@ -1,0 +1,44 @@
+.popupContainer {
+  display: flex;
+  gap: 15px;
+  width: 250px;
+  font-family: 'Inter', sans-serif;
+
+  .popupImage {
+    width: 90px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .popupTextContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4px;
+
+    .popupTitle {
+      font-size: 14px;
+      margin: 0;
+      font-weight: 600;
+      color: #2c3e50;
+      line-height: 1.2;
+    }
+
+    .popupSpecs {
+      font-size: 12px;
+      color: #7f8c8d;
+    }
+
+    .popupPrice {
+      font-size: 14px;
+      color: #fe4a49;
+    }
+  }
+}
+
+// Optional: Resets Leaflet default internal popup link borders/padding 
+.leaflet-popup-content {
+  margin: 10px !important;
+  width: auto !important;
+}

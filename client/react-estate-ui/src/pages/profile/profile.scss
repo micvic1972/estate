@@ -1,0 +1,109 @@
+@use '../../responsive' as *;
+.profile{
+    display: flex;
+    height: 100%;
+    @include md{
+        flex-direction: column;
+    }
+    @include sm{
+        flex-direction: column;
+    }
+    .details{
+        flex: 3;
+        height: 100%;
+        @include md{
+            flex: none;
+            width: 100%;
+            height: auto;
+        }
+        @include sm{
+            flex: none;
+            width: 100%;
+            height: auto;
+        }
+        .wrapper{
+            padding-right: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            height: 100%;
+            @include md{
+                height: auto;
+                padding-right: 0;
+            }
+            @include sm{
+                height: auto;
+                padding-right: 0;
+            }
+            padding-bottom: 50px;
+            .title{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                h1{
+                    font-weight: 300;
+                }
+                button{
+                    padding: 12px 24px;
+                    background-color: #fece51;
+                    cursor: pointer;
+                    border: none;
+                }
+
+            }
+            
+            .info{
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                span{
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                }
+                button{
+                    width: 100px;
+                    background-color: teal;
+                    border: none;
+                    color: white;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                }
+                img{
+                    width: 40px;
+                    height: 40px ;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+    .chatcontainer{
+        flex: 2;
+        height: 100%;
+        @include md{
+            flex: none;
+            width: 100%;
+            height: auto;
+            min-height: 300px;
+        }
+        @include sm{
+            height: auto;
+            min-height: 250px;
+        }
+        .wrapper{
+            flex: 2;
+            padding: 0px 20px;
+            height: 100%;
+            @include md{
+                height: auto;
+                padding: 20px;
+            }
+            @include sm{
+                padding: 16px;
+            }
+        }
+    }
+}
