@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import "./navbar.scss";
-import { Link, useNavigate } from "react-router-dom"; // 🚀 Added useNavigate for handling the logout action button
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import apiReguest from "../../lib/apiRequest"; // Custom global axios configuration setup
+import apiReguest from "../../lib/apiRequest";
+import "./navbar.scss";
 
 function Navbar() {
     const { currentUser, updateUser } = useContext(AuthContext);
@@ -12,8 +12,8 @@ function Navbar() {
     const handleLogout = async () => {
         try {
             await apiReguest.post("/auth/logout");
-            updateUser(null); // Automatically wipes global context state and client storage caches
-            setopen(false); // Closes mobile menu drawer overlay
+            updateUser(null); 
+            setopen(false); 
             navigate("/");
         } catch (err) {
             console.error("[NAVBAR LOGOUT ERROR]", err);
@@ -27,7 +27,6 @@ function Navbar() {
                     <img src="/logo.png" alt="Del-Info Logo" />
                     <span>Del-Info</span>
                 </Link>
-                {/* 🚀 FIXED: Switched standard anchors to link route targets cleanly */}
                 <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
                 <Link to="/contact">Contact</Link>
@@ -35,21 +34,19 @@ function Navbar() {
           
             <div className="right">
                 {currentUser ? (
-                    <div className="user" style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-                        <Link to="/profile">
-                            {/* 🚀 FIXED: Safe user image loading with built-in default image layout backup parameters */}
+                    <div className="user">
+                        <span className="username">
+                            {currentUser.name || currentUser.username}
+                        </span>
+                        
+                        <Link to="/profile" className="avatar-link">
                             <img src={currentUser.avatar || "/noavatar.png"} alt="Profile" />
                         </Link>
-                        {/* 🚀 FIXED: Set mapping to read the backend response payload '.name' parameter */}
-                        <span className="username">{currentUser.name || currentUser.username}</span>
                         
                         <Link to="/profile" className="profile">
                           <div className="notification">3</div>
                           <span>Profile</span>
                         </Link>
-                        
-                        {/* Inline desktop logout feature support */}
-                        
                     </div>
                 ) : (
                     <>
@@ -66,7 +63,6 @@ function Navbar() {
                     />
                 </div> 
            
-                {/* 📱 Mobile Responsive Sliding Navigation Tray View */}
                 <div className={open ? "menu active" : "menu"}>
                     <Link to="/" onClick={() => setopen(false)}>Home</Link>
                     <Link to="/about" onClick={() => setopen(false)}>About</Link>
@@ -90,4 +86,3 @@ function Navbar() {
 }
 
 export default Navbar;
-

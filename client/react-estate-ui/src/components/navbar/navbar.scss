@@ -1,133 +1,272 @@
 @use '../../responsive' as *;
-nav{
+
+// --- Premium Design Color Tokens ---
+$primary-dark: #1e293b;       // Deep Slate for executive typography legibility
+$accent-yellow: #fece51;      // Core brand signature highlight yellow
+$accent-hover: #e5ba45;       // Smooth luxury hover state transition
+$text-main: #334155;          // Slate 700 - Highly supported body copy reading tone
+$text-muted: #64748b;         // Slate 500 - Light auxiliary subtext/placeholders
+$border-light: #e2e8f0;        // Minimal crisp baseline component separations
+
+nav {
     height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
 
-    a{
-        transition: all 0.4s ease;
-        @include sm{//this makes every links to diappear at sm devives
+    // --- Standard Navigation Links General Rules ---
+    a {
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease-in-out;
+
+        // Clean hidden fallback logic disables desktop links on tiny mobile devices
+        @include sm {
             display: none;
         }
 
         &:hover {
-            scale: 1.05;
+            transform: scale(1.03);
         }
     }
-    .left{
+
+    // --- Left Section Architecture (Branding and Base Links) ---
+    .left {
         flex: 3;
-        
         display: flex;
         align-items: center;
-        gap: 50px;
-        .logo{
-            font-weight: bold;
+        gap: 40px;
+
+        @include md { gap: 25px; }
+
+        .logo {
+            font-weight: 700;
             font-size: 20px;
-            align-items: center;
             display: flex;
-            gap: 10px;
-            img{
-                width: 28px;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0; // Logo can never squash down
+
+            img {
+                width: 26px;
+                height: 26px;
+                object-fit: contain;
             }
-            span{
-                @include md{
-                    display: none;
-                }
-                @include sm{
-                    display: initial;
-                }
+
+            span {
+                color: $primary-dark;
+                @include md { display: none; }
+                @include sm { display: initial; }
             }
         }
     }
-    .right{
+
+    // --- Right Section Architecture (User Core Profile Grid) ---
+    .right {
         flex: 2;
         display: flex;
         align-items: center;
         justify-content: flex-end;
         height: 100%;
-        @include sm {
-            background-color: transparent;
+
+        // Guest session links container layout rules
+        > a {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-left: 12px;
+            font-weight: 500;
+            font-size: 0.95rem;
+
+            @include sm {
+                display: none; // Clear desk elements on phone options
+            }
         }
 
-        a {
-            padding: 12px 24px;
-            margin: 20px;
-            
-        }
-        .user{
+        // --- 🔒 AIRTIGHT USER SESSION WORKSPACE MODULE ---
+        .user {
             display: flex;
             align-items: center;
-            font-weight: bold;
-            img{
-                width: 40px;
-                border-radius: 40px;
-                border-radius: 50%;
-                object-fit: cover;
-                margin-right: 20px;
+            justify-content: flex-end;
+            gap: 8px; // Uniform spatial cushioning distance grid
+            height: 100%;
+            flex-shrink: 0; // Forces the section wrapper container to stand completely rigid
+
+            // 🚀 THE UNBREAKABLE USERNAME SHIELD: Physically blocks text from hiding or dropping
+            .username {
+                display: inline-block;
+                white-space: nowrap;       // Refuses to wrap text strings down onto two broken rows
+                overflow: hidden;          // Safely hides characters exceeding layout constraints
+                text-overflow: ellipsis;   // Automatically prints clean trailing dots (...) if text overflows
+                font-weight: 700;
+                font-size: 0.9rem;
+                color: $primary-dark;
+                text-align: right;
+                vertical-align: middle;
+                flex-shrink: 0;            // 🚀 CRUCIAL: Disables the browser's automatic text compression models
+                
+                // Fluid width parameters that shift automatically across device size scales
+                @include lg { max-width: 140px; }
+                @include md { max-width: 95px; }
+                @include sm { max-width: 65px; } // Keeps mobile view clean, crisp, and stable
             }
-            span{
-                @include sm{
-                    display: none;
+
+            .avatar-link {
+                display: flex;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+                flex-shrink: 0;
+
+                img {
+                    width: 34px;
+                    height: 34px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    border: 2px solid $accent-yellow;
+                    box-sizing: border-box;
+                    transition: transform 0.2s ease;
+
+                    &:hover {
+                        transform: scale(1.05);
+                    }
                 }
             }
-            .profile{
-                padding: 12px 24px;
-                background-color: #fece51;
+
+            // Desktop-Only Standalone Profile Badge Button
+            .profile {
+                display: flex;
+                align-items: center;
+                padding: 7px 14px;
+                background-color: $accent-yellow;
                 cursor: pointer;
                 border: none;
-                position: relative;
+                font-size: 0.85rem;
+                font-weight: 600;
+                border-radius: 4px;
+                margin-left: 4px;
+                flex-shrink: 0;
 
-                .notification{
+                @include sm {
+                    display: none; // Cleared on mobile viewports completely
+                }
+
+                .notification {
                     position: absolute;
-                    top: -8px;
-                    right: -8px;
-                    background-color: red;
+                    top: -6px;
+                    right: -6px;
+                    background-color: #ef4444;
                     color: white;
                     border-radius: 50%;
-                    width: 26px;
-                    height: 26px;
+                    width: 18px;
+                    height: 18px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    font-size: 0.7rem;
+                    font-weight: 700;
                 }
             }
         }
 
-        .register{
-            background-color: #fece51;
+        // Guest Action Sign Up Button Link Style
+        .register {
+            background-color: $accent-yellow;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background-color: $accent-hover;
+            }
         }
-        .menuicon{
+
+        // --- Hamburger Icon Area Layout Parameters ---
+        .menuicon {
             display: none;
             z-index: 999;
-            img{
-                width: 36px;
-                height: 36px;
+            align-items: center;
+            margin-left: 12px;
+            flex-shrink: 0;
+
+            img {
+                width: 28px;
+                height: 26px;
                 cursor: pointer;
+                transition: opacity 0.2s;
+                &:hover { opacity: 0.8; }
             }
-            @include sm{
-                display: inline  ;
+
+            @include sm {
+                display: flex;
             }
         }
-        .menu{
-            position: absolute;
+
+        // --- 📱 MOBILE PORTABLE SLIDING NAVIGATION DRAWER OVERLAY ---
+        .menu {
+            position: fixed; // Fixed configuration anchors module perfectly over browser windows
             top: 0;
-            right: -50%;
-            background-color: black;
-            color: white;
+            right: -65%; // Hidden off-canvas buffer starting location
+            background-color: #111111;
+            color: #ffffff;
             height: 100vh;
-            width: 50%;
-            transition: all 1s ease;
+            
+            // 🚀 FIXED SPECIFICATION: Redesigned width to be elegant, tight, and highly portable
+            width: 60%; 
+            max-width: 260px; // Guarantees it takes up minimal space even on small mobile phone screens
+            
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); // Executive premium transition curves
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            &.active{
-                right: 0;
+            align-items: flex-start; // Left-aligned item lists look substantially cleaner
+            justify-content: flex-start;
+            padding: 80px 30px 40px 30px; // Spacious internal separation bounds
+            gap: 16px;
+            box-sizing: border-box;
+            z-index: 998;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.25);
+
+            &.active {
+                right: 0; // Slide cleanly into view window limits
             }
-            @include sm{
-                a{
-                    display: initial;
+
+            // Force full link restoration inside mobile portal drawers
+            a {
+                display: block;
+                color: #e2e8f0;
+                font-size: 1.05rem;
+                font-weight: 500;
+                margin: 0;
+                padding: 10px 0;
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05); // Modern sleek dividing borders
+                box-sizing: border-box;
+
+                @include sm {
+                    display: block;
+                }
+
+                &:hover {
+                    color: $accent-yellow;
+                    padding-left: 4px; // Interactive indentation feedback
+                }
+            }
+
+            span {
+                font-size: 1.05rem;
+                font-weight: 500;
+                padding: 10px 0;
+                width: 100%;
+                color: #f87171; // Red color validation code text for Logout actions
+                cursor: pointer;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                box-sizing: border-box;
+                transition: padding 0.2s ease;
+
+                &:hover {
+                    padding-left: 4px;
                 }
             }
         }

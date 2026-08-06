@@ -1,80 +1,77 @@
-// chat.scss
 @use '../../responsive' as *;
+
+$primary-dark: #1e293b;
+$accent-yellow: #fece51;
+$accent-hover: #e5ba45;
+$bg-panel: #ffffff;
+$bg-canvas: #fafafa;
+$border-light: #e2e8f0;
+$text-main: #334155;
+$text-muted: #64748b;
 
 .chat {
   height: 100%;
   display: flex;
-  flex-direction: column;
-  background: #fafafa;
+  box-sizing: border-box;
+  width: 100%;
+  position: relative; // Serves as the baseline safety anchor point
 
-  // ─── MESSAGES LIST (Left side on desktop, hidden when chat open) ───
-  .messages {
+  // --- Left Side: Thread Message Card List Arrays ---
+  .messages-list-wrapper {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 24px;
+    gap: 12px;
+    box-sizing: border-box;
     overflow-y: auto;
 
-    @include md {
-      padding: 16px;
-      gap: 12px;
-    }
-
-    // Hide messages list when chat is open on desktop
-    @media (min-width: 769px) {
-      .chatBox ~ & {
-        display: none;
-      }
-    }
-
     h1 {
-      font-weight: 300;
-      font-size: 28px;
-      color: #444;
-      margin: 0 0 8px 0;
-
-      @include sm {
-        font-size: 22px;
-      }
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $primary-dark;
+      margin: 0 0 4px 0;
+      letter-spacing: -0.025em;
     }
 
-    .message {
-      background: white;
-      padding: 16px 20px;
-      border-radius: 12px;
+    .message-card {
+      background: $bg-panel;
+      padding: 16px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       cursor: pointer;
-      transition: all 0.2s ease;
-      border: 1px solid #e8e8e8;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border: 1px solid $border-light;
+      box-sizing: border-box;
+      transition: all 0.2s ease-in-out;
 
       &:hover {
-        transform: translateX(4px);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        border-color: #fece51;
+        transform: translateY(-1px);
+        border-color: $accent-yellow;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
       }
 
       img {
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         object-fit: cover;
         flex-shrink: 0;
       }
 
-      span {
-        font-weight: 600;
-        color: #444;
-        font-size: 15px;
-        min-width: 100px;
+      .user-name {
+        font-weight: 700;
+        color: $primary-dark;
+        font-size: 0.95rem;
+        min-width: 80px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
-      p {
-        color: #888;
-        font-size: 14px;
+      .latest-message-snippet {
+        color: $text-muted;
+        font-size: 0.88rem;
         margin: 0;
         flex: 1;
         overflow: hidden;
@@ -84,244 +81,205 @@
     }
   }
 
-  // ─── CHAT BOX ───
-  .chatBox {
-    flex: 1;
-    background: white;
-    border-radius: 20px 20px 0 0;
-    margin: 0 20px;
+  // --- 🚀 FIXED SPECIFICATION: FLOATING POP-UP OVERLAY CONTAINER ---
+  .chat-box-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    background: $bg-panel;
+    border: 1px solid $border-light;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e8e8e8;
-    border-bottom: none;
+    box-sizing: border-box;
+    
+    // Desktop and Tablet: Anchors the chat box as a persistent floating panel at the bottom right
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    width: 400px;
+    height: 500px;
+    border-radius: 12px;
+    z-index: 200; // Positions the layer safely on top of all profile grids
+    animation: slideUpFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
-    // Desktop: take full width when active
-    @media (min-width: 769px) {
-      position: fixed;
-      right: 0;
-      top: 0;
-      width: 400px;
-      height: 100vh;
-      margin: 0;
-      border-radius: 0;
-      z-index: 100;
-    }
-
-    @include md {
-      position: relative;
-      width: 100%;
-      height: auto;
-      margin: 0 12px;
-      border-radius: 16px 16px 0 0;
-    }
-
+    // Mobile: Automatically expands to a clean, portable full-viewport overlay
     @include sm {
-      margin: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
       border-radius: 0;
+      margin: 0;
+      z-index: 9999; // Explicit layer override sits over navigation headers
     }
 
-    // Top bar
-    .top {
-      background: #fcf5f3;
-      padding: 16px 24px;
+    // Top Conversation Header
+    .chat-header-bar {
+      background: #fdfbf7;
+      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #e8e8e8;
+      border-bottom: 1px solid $border-light;
       flex-shrink: 0;
 
-      @include sm {
-        padding: 12px 16px;
-      }
-
-      .user {
+      .active-user-meta {
         display: flex;
         align-items: center;
         gap: 12px;
 
         img {
-          width: 40px;
-          height: 40px;
+          width: 34px;
+          height: 34px;
           border-radius: 50%;
           object-fit: cover;
+          border: 1.5px solid $accent-yellow;
         }
 
         span {
-          font-weight: 600;
-          color: #444;
-          font-size: 15px;
+          font-weight: 700;
+          color: $primary-dark;
+          font-size: 0.95rem;
         }
       }
 
-      .close {
+      .close-panel-btn {
+        background: none;
+        border: none;
         cursor: pointer;
-        color: #888;
-        font-size: 20px;
-        width: 36px;
-        height: 36px;
+        color: $text-muted;
+        font-size: 1.2rem;
+        font-weight: bold;
+        padding: 4px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 50%;
-        transition: all 0.2s;
+        transition: color 0.15s;
 
         &:hover {
-          background: #e8e8e8;
-          color: #444;
+          color: #ef4444; 
         }
       }
     }
 
-    // Messages center
-    .center {
+    // Conversation Streams Center Viewport
+    .conversation-scroller-view {
       flex: 1;
       overflow-y: auto;
-      padding: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      background: #fafafa;
+      gap: 14px;
+      background-color: $bg-canvas;
+      box-sizing: border-box;
 
-      @include sm {
-        padding: 16px;
-        gap: 12px;
-      }
-
-      &::-webkit-scrollbar {
-        width: 6px;
-      }
-      &::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #ddd;
-        border-radius: 10px;
-      }
-
-      .chatMessage {
-        max-width: 75%;
-        padding: 14px 18px;
-        border-radius: 18px;
-        background: white;
-        border: 1px solid #e8e8e8;
-        color: #555;
-        position: relative;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-
-        @include sm {
-          max-width: 85%;
-          padding: 12px 16px;
-        }
+      .chat-bubble {
+        max-width: 80%;
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: $bg-panel;
+        border: 1px solid $border-light;
+        color: $text-main;
+        align-self: flex-start;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+        box-sizing: border-box;
 
         p {
-          margin: 0 0 6px 0;
-          line-height: 1.5;
-          font-size: 14px;
+          margin: 0 0 4px 0;
+          line-height: 1.4;
+          font-size: 0.9rem;
+          word-break: break-word;
         }
 
-        span {
-          font-size: 11px;
-          color: #aaa;
+        .timestamp {
+          font-size: 0.72rem;
+          color: $text-muted;
           display: block;
-        }
-
-        &:not(.own) {
-          align-self: flex-start;
-          border-bottom-left-radius: 4px;
+          text-align: right;
         }
 
         &.own {
           align-self: flex-end;
-          background: #444;
-          color: white;
-          border-color: #444;
-          border-bottom-right-radius: 4px;
+          background: $primary-dark;
+          color: #ffffff;
+          border-color: $primary-dark;
 
-          span {
+          .timestamp {
             color: rgba(255, 255, 255, 0.6);
           }
         }
       }
     }
 
-    // Bottom input ─── FIXED ───
-    .bottom {
-      border-top: 1px solid #e8e8e8;
-      padding: 16px 24px;
+    // Action Input Form Control Row
+    .chat-input-action-bar {
+      border-top: 1px solid $border-light;
+      padding: 14px 16px;
       display: flex;
-      align-items: flex-end;      // Align to bottom for multi-line
-      gap: 12px;
-      background: white;
+      align-items: center;
+      gap: 10px;
+      background: $bg-panel;
       flex-shrink: 0;
+      box-sizing: border-box;
 
       @include sm {
-        padding: 12px 16px;
+        padding: 16px;
+        padding-bottom: max(16px, env(safe-area-inset-bottom)); // Protects mobile home indicator spaces
       }
 
       textarea {
         flex: 1;
-        min-height: 48px;
-        max-height: 120px;
-        border: 1px solid #e8e8e8;
-        border-radius: 24px;
-        padding: 14px 20px;
-        background: #fafafa;
-        color: #444;
-        font-size: 14px;
+        height: 42px;
+        border: 1.5px solid $border-light;
+        border-radius: 6px;
+        padding: 11px 14px;
+        background: $bg-canvas;
+        color: $text-main;
+        font-size: 0.9rem;
         resize: none;
         outline: none;
-        transition: all 0.2s;
+        box-sizing: border-box;
         font-family: inherit;
-        line-height: 1.4;
-
-        &::placeholder {
-          color: #aaa;
-        }
+        line-height: 1.3;
+        transition: border-color 0.2s, background 0.2s;
 
         &:focus {
-          border-color: #fece51;
-          background: white;
+          border-color: $accent-yellow;
+          background: $bg-panel;
         }
       }
 
-      // ─── FIXED SEND BUTTON ───
       button {
-        height: 48px;             // Match textarea min-height
-        padding: 0 24px;
+        height: 42px;
+        padding: 0 20px;
         border: none;
-        border-radius: 24px;
-        background: #fece51;
-        color: #333;
+        border-radius: 6px;
+        background: $accent-yellow;
+        color: $primary-dark;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 0.9rem;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: background-color 0.15s;
         flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        white-space: nowrap;      // Prevent text wrap
-
-        // Optional: add send icon
-        &::before {
-          content: '→';
-          font-size: 16px;
-        }
 
         &:hover {
-          background: #e5b800;
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(254, 206, 81, 0.4);
-        }
-
-        &:active {
-          transform: translateY(0);
+          background: $accent-hover;
         }
       }
     }
+  }
+}
+
+// Minimal opening animation loop variables
+@keyframes slideUpFade {
+  from {
+    transform: translateY(15px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

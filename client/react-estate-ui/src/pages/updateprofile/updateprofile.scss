@@ -1,0 +1,217 @@
+@use '../../responsive' as *; 
+
+$primary-dark: #1e293b;       
+$secure-green: #4caf50;        
+$secure-hover: #43a047;        
+$background-canvas: #fcf6f0;   
+$text-main: #334155;           
+$text-muted: #64748b;          
+$border-light: #e2e8f0;        
+
+.update-profile {
+  height: 100vh;
+  min-height: 700px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $background-canvas;
+  padding: 24px;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+
+  @include sm { padding: 16px; height: auto; min-height: auto; }
+
+  // 🚀 TWO-COLUMN GRID BOUNDARY BASE: Aligns form fields cleanly next to image previews
+  .profile-dashboard-layout {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03);
+    width: 100%;
+    max-width: 850px; // Expanded layout width to give breathing room for media columns
+    display: flex;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    @include sm {
+      flex-direction: column-reverse; // Form layout stacks up smoothly on mobile viewports
+      max-width: 440px;
+      box-shadow: none;
+      border: 1px solid #f1f5f9;
+    }
+
+    // 📝 Left Side Form Formats
+    .form-section {
+      flex: 1.2;
+      padding: 48px;
+      border-right: 1px solid $border-light;
+      box-sizing: border-box;
+
+      @include md { padding: 36px; }
+      @include sm { padding: 32px 24px; border-right: none; }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        width: 100%;
+        align-items: stretch; // Locked to stretch to stop jiggling clicks
+
+        h2 {
+          font-size: 1.8rem;
+          color: $primary-dark;
+          font-weight: 700;
+          margin: 0 0 4px 0;
+          letter-spacing: -0.025em;
+        }
+
+        .input-field-group {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          width: 100%;
+
+          label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: $text-main;
+          }
+
+          input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid $border-light;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: $text-main;
+            background-color: #ffffff;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.2s;
+
+            &:focus:not(:disabled) {
+              border-color: $secure-green;
+              box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            }
+          }
+
+          // Grayed out styling for the locked email input box parameters
+          .locked-email-input {
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+            color: $text-muted;
+            cursor: not-allowed;
+            font-weight: 500;
+          }
+        }
+
+        .submit-action-btn {
+          width: 100%;
+          padding: 15px;
+          border: none;
+          background-color: $secure-green;
+          color: #ffffff;
+          font-size: 1rem;
+          font-weight: 600;
+          border-radius: 6px;
+          cursor: pointer;
+          box-sizing: border-box;
+          transition: background 0.15s, transform 0.1s;
+
+          &:hover:not(:disabled) { background-color: $secure-hover; }
+          &:active:not(:disabled) { transform: scale(0.995); }
+          &:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+        }
+
+        // 🚀 PASSWORD RECOVERY ROUTE REDIRECT BLOCK STYLING
+        .security-recovery-link-zone {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          margin-top: 10px;
+          border-top: 1.5px dashed $border-light;
+          padding-top: 16px;
+          font-size: 0.85rem;
+
+          span { color: $text-muted; font-weight: 500; }
+          a {
+            color: #d9534f; // Clean visible dark red text alert
+            text-decoration: none;
+            font-weight: 600;
+            &:hover { text-decoration: underline; color: #c9302c; }
+          }
+        }
+
+        .status-error-notice {
+          color: #991b1b; background-color: #fef2f2; padding: 12px; border-radius: 6px; text-align: center; font-size: 0.88rem; font-weight: 500;
+        }
+        .status-success-notice {
+          color: #166534; background-color: #f0fdf4; padding: 12px; border-radius: 6px; text-align: center; font-size: 0.88rem; font-weight: 500;
+        }
+      }
+    }
+
+    // 📷 Right Side Image Workspace Upload Grid Layout 
+    .media-upload-section {
+      flex: 0.8;
+      background-color: #fafafa; // Contrasting executive workspace sub-color tone
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      box-sizing: border-box;
+
+      @include md { padding: 36px; }
+      @include sm { padding: 32px 24px; background-color: #ffffff; width: 100%; border-bottom: 1px dashed $border-light; }
+
+      h3 { font-size: 1.15rem; color: $primary-dark; font-weight: 600; margin: 0; }
+
+      .avatar-preview-box {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid $secure-green;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+        img { width: 100%; height: 100%; object-fit: cover; }
+      }
+
+      .cloudinary-widget-box-placeholder {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+
+        .cloudinary-link-input {
+          font-size: 0.85rem; // Subtle compressed tracking for raw URL path text
+          color: $text-muted;
+        }
+
+        .cloudinary-trigger-btn {
+          width: 100%;
+          padding: 12px;
+          background-color: $primary-dark;
+          color: #ffffff;
+          border: none;
+          border-radius: 6px;
+          font-weight: 600;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: opacity 0.15s;
+          &:hover { opacity: 0.9; }
+        }
+      }
+
+      .cancellation-action-bar {
+        margin-top: 10px;
+        span {
+          font-size: 0.88rem; color: $text-muted; text-decoration: underline; cursor: pointer; font-weight: 500;
+          &:hover { color: #333; }
+        }
+      }
+    }
+
+  }
+}

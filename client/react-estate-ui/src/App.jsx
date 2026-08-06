@@ -9,6 +9,7 @@ import Forgetpasssword from "./pages/forgetpassword/Forgetpassword"; //  Importe
 // FIXED: Both functions are imported using clean named curly braces from a single line
 import { Layout, RequireAuth } from "./pages/layout/Layout"; 
 import VerifyOtp from "./pages/verifyotp/Verifyotp";
+import UpdateProfile from "./pages/updateprofile/Updateprofile";
 const router = createBrowserRouter([
   {
     //  Group A: Public paths inside the standard Layout wrapper
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <Profile /> }, 
       { path: "/list", element: <Listpage /> },
       { path: "/:id", element: <Singlepage /> },
+      {path: "/profile/update", element: <UpdateProfile/>}
     ]
   }
 ]);

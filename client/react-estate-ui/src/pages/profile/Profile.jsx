@@ -5,7 +5,7 @@ import apiReguest from "../../lib/apiRequest";
 import "./profile.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react"; // 🚀 FIXED: Added missing hook import to read context
-
+                    import { Link } from "react-router-dom"; 
 function Profile() {
     const navigate = useNavigate();
     //FIXED: Tune into your global broadcast bubble to pull out the live data and updater function
@@ -25,9 +25,12 @@ function Profile() {
         <div className="profile">
             <div className="details">
                 <div className="wrapper">
+
                     <div className="title">
                         <h1>User Information</h1>
-                        <button>Update Profile</button>
+                        <Link to="/profile/update">
+                            <button style={{ cursor: "pointer" }}>Update Profile</button>
+                        </Link>
                     </div>
                     <div className="info">
                         <span>
