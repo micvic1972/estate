@@ -35,10 +35,13 @@ function Navbar() {
             <div className="right">
                 {currentUser ? (
                     <div className="user">
-                        <span className="username">
+                        <Link to="/profile" className="avatar-link">
+                           <span className="username">
                             {currentUser.name || currentUser.username}
                         </span>
                         
+                        </Link>
+                      
                         <Link to="/profile" className="avatar-link">
                             <img src={currentUser.avatar || "/noavatar.png"} alt="Profile" />
                         </Link>
@@ -71,6 +74,7 @@ function Navbar() {
                     {currentUser ? (
                         <>
                             <Link to="/profile" onClick={() => setopen(false)}>Profile</Link>
+                            <Link to="/list" onClick={() => setopen(false)}>My List</Link>
                             <span onClick={handleLogout} style={{ cursor: "pointer", color: "red" }}>Logout</span>
                         </>
                     ) : (

@@ -1,0 +1,207 @@
+@use '../../responsive' as *;
+
+// --- Premium Design Color Tokens ---
+$primary-dark: #1e293b;       // Slate 800 - Deep slate for solid legibility
+$secure-green: #4caf50;        // Secure green brand focus
+$secure-hover: #43a047;        // Premium hover state transition
+$background-canvas: #fcf6f0;   // Warm executive off-white canvas
+$text-main: #334155;           // Slate 700 - Legible reading description tone
+$text-muted: #64748b;          // Slate 500 - Auxiliary subtext/labels
+$border-light: #e2e8f0;        // Slate 200 - Minimal crisp separations
+
+.register {
+  height: 100vh;
+  min-height: 650px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $background-canvas;
+  padding: 24px;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  // Fluid responsive padding updates across system breakpoints
+  @include lg { padding: 32px; }
+  @include md { padding: 24px; }
+  @include sm { padding: 16px; min-height: auto; height: auto; }
+
+  .auth-box-container {
+    background: #ffffff;
+    padding: 48px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03);
+    width: 100%;
+    max-width: 460px;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+
+    @include md { padding: 40px; }
+    @include sm { padding: 32px 24px; border-radius: 8px; box-shadow: none; border: 1px solid #f1f5f9; }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      align-items: stretch; // Forces inputs and buttons to lock full width symmetrically
+
+      h2 {
+        font-size: 1.85rem;
+        color: $primary-dark;
+        font-weight: 700;
+        text-align: center;
+        margin: 0 0 4px 0;
+        letter-spacing: -0.025em;
+      }
+
+      // Base input text field elements configuration
+      input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1.5px solid $border-light;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        color: $text-main;
+        background-color: #ffffff;
+        outline: none;
+        box-sizing: border-box;
+        transition: all 0.2s ease-in-out;
+
+        &::placeholder {
+          color: $text-muted;
+          opacity: 0.7;
+        }
+        &:focus {
+          border-color: $secure-green;
+          box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+        &:disabled {
+          background-color: #f8fafc;
+          cursor: not-allowed;
+        }
+      }
+
+      // Traps inline toggle buttons securely within the input borders
+      .password-field-wrapper {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+
+        input {
+          padding-right: 65px; // Safeguard padding stops text from slipping under the button
+        }
+
+        // Explicit isolation rules prevent this from absorbing main button styles
+        .toggle-visibility {
+          position: absolute;
+          right: 14px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none !important;
+          border: none !important;
+          color: $text-muted !important;
+          font-size: 0.82rem !important;
+          font-weight: 600 !important;
+          cursor: pointer !important;
+          width: auto !important;
+          height: auto !important;
+          padding: 6px !important;
+          margin: 0 !important;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          box-shadow: none !important;
+
+          &:hover {
+            color: $primary-dark !important;
+          }
+          &:disabled {
+            cursor: not-allowed !important;
+            opacity: 0.5;
+          }
+        }
+      }
+
+      // System notification notice layouts
+      .status-error-notice {
+        width: 100%;
+        color: #991b1b;
+        background-color: #fef2f2;
+        border: 1px solid #fee2e2;
+        padding: 12px 16px;
+        border-radius: 6px;
+        font-size: 0.88rem;
+        font-weight: 500;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .status-success-notice {
+        width: 100%;
+        color: #166534;
+        background-color: #f0fdf4;
+        border: 1px solid #dcfce7;
+        padding: 12px 16px;
+        border-radius: 6px;
+        font-size: 0.88rem;
+        font-weight: 500;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      // Principal submission button layout specifications
+      .submit-action-btn {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        border: none;
+        background-color: $secure-green;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+        box-sizing: border-box;
+        transition: background-color 0.15s, transform 0.1s;
+
+        &:hover:not(:disabled) { 
+          background-color: $secure-hover; 
+        }
+        &:active:not(:disabled) { 
+          transform: scale(0.99); 
+        } 
+        &:disabled { 
+          background-color: #cbd5e1; 
+          color: #94a3b8; 
+          cursor: not-allowed; 
+        }
+      }
+
+      // Bottom redirect link container limits vertical stretching
+      .navigation-footer-links {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 4px;
+
+        a {
+          font-size: 0.88rem;
+          color: $text-muted;
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 0.15s ease;
+
+          &:hover {
+            color: $primary-dark;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,81 +1,84 @@
-// listpage.scss
 @use '../../responsive' as *;
 
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+// --- Premium Design Color Tokens ---
+$background-canvas: #fafafa;
+$border-light: #e2e8f0;
+$map-placeholder-bg: #f1f5f9;
 
-.listpage {
+.listpage-viewport-wrapper {
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 50px); // Locks layout envelope cleanly right beneath the 50px navbar
   width: 100%;
-  background: #fafafa;
-  overflow: hidden;           // Lock outer container on desktop
+  background-color: $background-canvas;
+  overflow: hidden; // Prevents outer app layout canvas from double scrolling
+  box-sizing: border-box;
 
+  // Tablet viewpoint structural adaptations
   @include md {
     flex-direction: column;
-    height: 100vh;            // ← KEEP 100vh, don't use auto
-    overflow: hidden;         // ← Still lock, scroll happens inside
+    height: auto;
+    min-height: calc(100vh - 50px);
+    overflow: visible;
   }
 
-  // ─── LEFT: List + Filter ───
-  .listcontainer {
+  // --- 📝 LEFT SIDE: Real Estate Cards & Filtering Stream ---
+  .listcontainer-panel {
     flex: 3;
-    min-width: 0;
-    height: 100vh;            // Full viewport
-    overflow-y: auto;         // ← ALWAYS scrollable
+    height: 100%;
+    overflow-y: auto; // Restricts grid scrolling to happen exclusively within this column panel
     overflow-x: hidden;
-    background: #fafafa;
+    background-color: $background-canvas;
+    box-sizing: border-box;
 
-    // Tiny scrollbar
+    // Compact native layout scrollbar mechanics
     scrollbar-width: thin;
-    scrollbar-color: rgba(0,0,0,0.12) transparent;
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
 
     &::-webkit-scrollbar {
-      width: 5px;
+      width: 6px;
     }
     &::-webkit-scrollbar-track {
       background: transparent;
     }
     &::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.12);
+      background: rgba(0, 0, 0, 0.15);
       border-radius: 10px;
     }
 
+    // Tablet viewpoint adjustments: Displays both components stacked
     @include md {
       flex: none;
       width: 100%;
-      height: 55vh;         // ← Fixed height, scrolls inside
-      order: 2;
-      overflow-y: auto;     // ← KEEP scrolling
+      height: 55vh; 
+      overflow-y: auto;
+      order: 2; 
     }
 
+    // 🚀 FIXED SPECIFICATION: Mobile viewport reset
     @include sm {
-      height: 60vh;         // More space for list on small screens
+      height: calc(100vh - 50px); // Expands the list container to fill 100% of the viewport height below the navbar
+      overflow-y: auto;
+      order: 1; // Resets order flow since the map component is hidden
     }
 
-    .wrapper {
-      padding: 24px 40px 50px 24px;
-      gap: 20px;
+    .wrapper-inner-box {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      box-sizing: border-box;
+      width: 100%;
 
-      @include lg {
-        padding: 20px 30px 40px 20px;
-      }
+      @include lg { padding: 24px; gap: 20px; }
+      @include md { padding: 20px; gap: 16px; }
+      @include sm { padding: 24px 16px; gap: 16px; } // Comfortable touch friendly padding allocations
 
-      @include md {
-        padding: 16px 20px 40px 20px;
-      }
-
-      @include sm {
-        padding: 12px 16px 30px 16px;
-      }
-
-      .cards {
+      .cards-stack-layout {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 24px;
+        width: 100%;
+        box-sizing: border-box;
 
         @include sm {
           gap: 16px;
@@ -84,26 +87,36 @@ html, body, #root {
     }
   }
 
-  // ─── RIGHT: Map ───
-  .mapcontainer {
+  // --- 🗺️ RIGHT SIDE: Geolocation Interactive Map Interface ---
+  .mapcontainer-panel {
     flex: 2;
-    height: 100vh;
+    height: 100%;
     min-width: 0;
     position: relative;
-    background: #e8e8e8;
+    background-color: $map-placeholder-bg;
+    border-left: 1px solid $border-light;
+    box-sizing: border-box;
 
+    // Forces inner map scripts to span exactly 100% of the allocated bounding box
+    div {
+      width: 100%;
+      height: 100%;
+    }
+
+    // Tablet viewpoint adjustments: Map floats at the top
     @include md {
       flex: none;
       width: 100%;
-      height: 45vh;
-      order: 2;
-      min-height: 250px;
+      height: 40vh; 
+      border-left: none;
+      border-bottom: 1px solid $border-light;
+      min-height: 260px;
+      order: 1; 
     }
 
+    // 🚀 FIXED SPECIFICATION: Mobile viewport isolation
     @include sm {
-      height: 40vh;
-      order: 2;
-      min-height: 200px;
+      display: none !important; // Completely unlinks and hides the map container panel on mobile displays
     }
   }
 }

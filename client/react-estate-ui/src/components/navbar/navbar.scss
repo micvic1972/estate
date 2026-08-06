@@ -136,39 +136,7 @@ nav {
             }
 
             // Desktop-Only Standalone Profile Badge Button
-            .profile {
-                display: flex;
-                align-items: center;
-                padding: 7px 14px;
-                background-color: $accent-yellow;
-                cursor: pointer;
-                border: none;
-                font-size: 0.85rem;
-                font-weight: 600;
-                border-radius: 4px;
-                margin-left: 4px;
-                flex-shrink: 0;
-
-                @include sm {
-                    display: none; // Cleared on mobile viewports completely
-                }
-
-                .notification {
-                    position: absolute;
-                    top: -6px;
-                    right: -6px;
-                    background-color: #ef4444;
-                    color: white;
-                    border-radius: 50%;
-                    width: 18px;
-                    height: 18px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 0.7rem;
-                    font-weight: 700;
-                }
-            }
+       
         }
 
         // Guest Action Sign Up Button Link Style

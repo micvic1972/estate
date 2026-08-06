@@ -7,7 +7,7 @@ import "./updateprofile.scss";
 function UpdateProfile() {
     const { currentUser, updateUser } = useContext(AuthContext);
     
-    // 🚀 RESTRICTED STATE HOOKS: Only allow modifications on Username and Avatar strings
+    // RESTRICTED STATE HOOKS: Only allow modifications on Username and Avatar strings
     const [username, setUsername] = useState(currentUser?.name || currentUser?.username || "");
     const [avatar, setAvatar] = useState(currentUser?.avatar || "");
     
@@ -104,7 +104,7 @@ function UpdateProfile() {
                     </form>
                 </div>
 
-                {/* 📷 RIGHT COLUMN: The Executive Cloudinary Workspace Area */}
+                {/*  RIGHT COLUMN: The Executive Cloudinary Workspace Area */}
                 <div className="media-upload-section">
                     <h3>Profile Visual Asset</h3>
                     <div className="avatar-preview-box">
@@ -114,7 +114,7 @@ function UpdateProfile() {
                         />
                     </div>
                     
-                    {/* 🚀 FIXED SECURE URL LINK SLOT: Ready to inject your Cloudinary Upload Widget loops next week */}
+                    {/*  FIXED SECURE URL LINK SLOT: Ready to inject your Cloudinary Upload Widget loops next week */}
                     <div className="cloudinary-widget-box-placeholder">
                         <input 
                             type="text"
